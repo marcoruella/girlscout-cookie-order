@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ezryelle's Girl Scout Cookies</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            max-width: 600px;
+            margin: auto;
+        }
+        label, input, select, button {
+            display: block;
+            margin-top: 10px;
+        }
+        .cookie-image {
+            width: 100%;
+            max-width: 600px;
+            display: block;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Order Ezryelle's Girl Scout Cookies!</h1>
+    <p>Dear friends and colleagues,</p>
+    <p>I want to help my sweet 12-year-old neighbor Ezryelle who is selling Girl Scout cookies!</p>
+    <p>They are delicious!</p>
+    <p><strong>LET'S HELP HER! PLEASE ORDER A LOT OF COOKIES USING THIS FORM!</strong></p>
+    <p>Thanks so much!</p>
+    <p><strong>Marco Ruella, MD</strong></p>
+    <img src="ezryelle.jpg" alt="Ezryelle" class="cookie-image">
+    
+    <form id="cookieForm">
+        <label for="name">Your Name:</label>
+        <input type="text" id="name" name="name" required>
+        
+        <label for="contact">Contact Information (Phone/Email):</label>
+        <input type="text" id="contact" name="contact" required>
+        
+        <label for="address">Delivery Address (On-campus at Penn only):</label>
+        <input type="text" id="address" name="address" required>
+        
+        <h3>Select Your Cookies:</h3>
+        <div id="cookieList"></div>
+        
+        <img src="cookie-image.jpg" alt="Girl Scout Cookies" class="cookie-image">
+        
+        <h3>Total: $<span id="totalPrice">0.00</span></h3>
+        
+        <button type="submit">Submit Order</button>
+    </form>
+    
+    <h2>Payment via Venmo</h2>
+    <p>After submitting your order, please complete your payment via Venmo:</p>
+    <p><a href="https://venmo.com/u/Marco-Ruella" target="_blank"><strong>@Marco-Ruella</strong></a> (Please include your name in the payment note)</p>
+    
+    <script>
+        const cookies = [
+            { name: "Adventurefuls", price: 5 },
+            { name: "Toast-Yay!", price: 5 },
+            { name: "Lemonades", price: 5 },
+            { name: "Trefoils", price: 5 },
+            { name: "Thin Mints", price: 5 },
+            { name: "Peanut Butter Patties", price: 5 },
+            { name: "Caramel deLites", price: 5 },
+            { name: "Peanut Butter Sandwich", price: 5 },
+            { name: "Caramel Chocolate Chip", price: 6 }
+        ];
+        
+        const cookieList = document.getElementById("cookieList");
+        const totalPriceEl = document.getElementById("totalPrice");
+        let totalPrice = 0;
+        
+        cookies.forEach(cookie => {
+            const div = document.createElement("div");
+            div.innerHTML = `
+                <label>${cookie.name} ($${cookie.price} per box)</label>
+                <input type="number" min="0" value="0" data-price="${cookie.price}" class="cookieQty">
+            `;
+            cookieList.appendChild(div);
+        });
+        
+        document.querySelectorAll(".cookieQty").forEach(input => {
+            input.addEventListener("input", () => {
+                totalPrice = 0;
+                document.querySelectorAll(".cookieQty").forEach(i => {
+                    totalPrice += i.value * i.dataset.price;
+                });
+                totalPriceEl.textContent = totalPrice.toFixed(2);
+            });
+        });
+        
+        document.getElementById("cookieForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const name = document.getElementById("name").value;
+            const contact = document.getElementById("contact").value;
+            const address = document.getElementById("address").value;
+            
+            let orderSummary = "Order Details:\n";
+            cookies.forEach((cookie, index) => {
+                let qty = document.querySelectorAll(".cookieQty")[index].value;
+                if (qty > 0) {
+                    orderSummary += `${cookie.name}: ${qty} box(es)\n`;
+                }
+            });
+            orderSummary += `Total: $${totalPrice.toFixed(2)}`;
+            
+            const emailBody = `Name: ${name}%0D%0AContact: ${contact}%0D%0AAddress: ${address}%0D%0A%0D%0A${orderSummary}`;
+            
+            window.location.href = `mailto:mruella@upenn.edu?subject=Girl Scout Cookie Order&body=${emailBody}`;
+            alert("Order submitted! Please complete your payment on Venmo before closing this page.");
+        });
+    </script>
+</body>
+</html>
