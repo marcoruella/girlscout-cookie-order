@@ -32,6 +32,7 @@
     <p><strong>LET'S HELP HER! PLEASE ORDER A LOT OF COOKIES USING THIS FORM!</strong></p>
     <p>Thanks so much!</p>
     <p><strong>Marco Ruella, MD</strong></p>
+    
     <img src="ezryelle.jpg" alt="Ezryelle" class="cookie-image">
     
     <form id="cookieForm">
@@ -41,14 +42,12 @@
         <label for="contact">Contact Information (Phone/Email):</label>
         <input type="text" id="contact" name="contact" required>
         
-        <label for="address">Delivery Address (On-campus at Penn only):</label>
+        <label for="address">Delivery Address (Must be within Penn Campus):</label>
         <input type="text" id="address" name="address" required>
         
         <h3>Select Your Cookies:</h3>
         <img src="cookie-image.jpg" alt="Girl Scout Cookies" class="cookie-image">
         <div id="cookieList"></div>
-        
-        <img src="cookie-image.jpg" alt="Girl Scout Cookies" class="cookie-image">
         
         <h3>Total: $<span id="totalPrice">0.00</span></h3>
         
@@ -68,8 +67,7 @@
             { name: "Thin Mints", price: 5 },
             { name: "Peanut Butter Patties", price: 5 },
             { name: "Caramel deLites", price: 5 },
-            { name: "Peanut Butter Sandwich", price: 5 },
-            { name: "Caramel Chocolate Chip", price: 6 }
+            { name: "Peanut Butter Sandwich", price: 5 }
         ];
         
         const cookieList = document.getElementById("cookieList");
